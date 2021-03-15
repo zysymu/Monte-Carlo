@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from numba import jit
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 
