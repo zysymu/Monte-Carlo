@@ -36,7 +36,7 @@ class PebbleGame ():
         sns.heatmap(self.board, annot=labels, fmt="", linewidths=.5, cmap="PiYG")
         plt.title(f'Markov-chain Discrete Pebble Game Distribution over {int(self.total_iterations)} iterations')
         plt.show()
-
+    """
     def plotProbs(self):
         plt.figure(figsize=(7,7), dpi=200)
 
@@ -52,8 +52,8 @@ class PebbleGame ():
                 
         plt.legend()
         plt.show()
-
-    def plotProbsBlock(self, p, zoom):
+    """
+    def plotProbs(self, p, zoom):
         fig, ax = plt.subplots(figsize=(7,7), dpi=200)
 
         # iterate over positions 4 hidden plots
@@ -88,22 +88,17 @@ class PebbleGame ():
             axins = zoomed_inset_axes(ax, 6, loc=1) # zoom = 6
             axins.plot(range(self.total_iterations), position, linewidth=2, color='r', label=f'({i}, {j})')
             axins.plot(range(self.total_iterations), a, 'k-', linestyle = "-", lw=1.5)
-            axins.set_xlim(self.total_iterations-(self.total_iterations*.1), self.total_iterations) # Limit the region for zoom
+            axins.set_xlim(self.total_iterations-(self.total_iterations*.1), self.total_iterations)
             axins.set_ylim((1/9-0.05), (1/9+0.05))
 
-            plt.xticks(visible=False)  # Not present ticks
+            plt.xticks(visible=False)
             #plt.yticks(visible=False)
-            #
-            ## draw a bbox of the region of the inset axes in the parent axes and
-            ## connecting lines between the bbox and the inset axes area
             mark_inset(ax, axins, loc1=1, loc2=3, fc="none", ec=".5")
-
 
         # general title
         ax.set_title(f'Probabilities Over Time of {p}')
         plt.draw()
         plt.show()
-
 
     @staticmethod
     @jit(nopython=True) # use numba
