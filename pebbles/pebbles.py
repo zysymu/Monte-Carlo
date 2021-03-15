@@ -2,6 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from numba import jit
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+
 
 class PebbleGame ():
     #plt.style.use('ggplot')
@@ -50,8 +54,8 @@ class PebbleGame ():
         plt.legend()
         plt.show()
 
-    def plotProbsBlock(self, p):
-        plt.figure(figsize=(7,7), dpi=200)
+    def plotProbsBlock(self, p, zoom):
+        fig, ax = plt.subplots(figsize=(7,7), dpi=200)
 
         # iterate over positions 4 hidden plots
         for i in range(len(self.board)):
@@ -61,7 +65,7 @@ class PebbleGame ():
                 for board in self.board_per_iteration:
                     position.append(board[i,j]/np.sum(board))
 
-                plt.plot(range(self.total_iterations), position, marker='', linestyle="--", color='grey', linewidth=1., alpha=0.3)
+                ax.plot(range(self.total_iterations), position, marker='', linestyle="--", color='grey', linewidth=1., alpha=0.3)
 
         # real plot
         x, y = p
@@ -69,20 +73,36 @@ class PebbleGame ():
         for board in self.board_per_iteration:
             position.append(board[x, y]/np.sum(board))
 
-        plt.plot(range(self.total_iterations), position, linewidth=2, color='r', label=f'({i}, {j})')
+        ax.plot(range(self.total_iterations), position, linewidth=2, color='r', label=f'({i}, {j})')
              
         # analytic prob
         a = np.full((self.total_iterations), 1/9)
-        plt.plot(range(self.total_iterations), a, 'k-', linestyle = "-", lw=1.5)
+        ax.plot(range(self.total_iterations), a, 'k-', linestyle = "-", lw=1.5)
 
         # configs
         plt.xlim(0,self.total_iterations)
         plt.ylim(0,1)
         plt.yticks(np.arange(0,1.05,1/9), [r'$0$',r'$\frac{1}{9}$',r'$\frac{2}{9}$', r'$\frac{3}{9}$',r'$\frac{4}{9}$',r'$\frac{5}{9}$',r'$\frac{6}{9}$',r'$\frac{7}{9}$',r'$\frac{8}{9}$', r'$1$'])
-         
-        # general title
-        plt.title(f'Probabilities Over Time of {p}')
 
+        # zoom 
+        if zoom == True:
+            axins = zoomed_inset_axes(ax, 6, loc=1) # zoom = 6
+            axins.plot(range(self.total_iterations), position, linewidth=2, color='r', label=f'({i}, {j})')
+            axins.plot(range(self.total_iterations), a, 'k-', linestyle = "-", lw=1.5)
+            axins.set_xlim(self.total_iterations-(self.total_iterations*.1), self.total_iterations) # Limit the region for zoom
+            axins.set_ylim((1/9-0.05), (1/9+0.05))
+
+            plt.xticks(visible=False)  # Not present ticks
+            #plt.yticks(visible=False)
+            #
+            ## draw a bbox of the region of the inset axes in the parent axes and
+            ## connecting lines between the bbox and the inset axes area
+            mark_inset(ax, axins, loc1=1, loc2=3, fc="none", ec=".5")
+
+
+        # general title
+        ax.set_title(f'Probabilities Over Time of {p}')
+        plt.draw()
         plt.show()
 
 

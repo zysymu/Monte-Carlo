@@ -8,7 +8,7 @@ game = PebbleGame(3, (0,2))
 #    game.simulate(i)
 #    print(f'time: {time.time() - start}; iterations: {i}')
 
-game.simulate(1000000000)
+game.simulate(3476)
 #game.plotBoard()
-game.plotProbsBlock((1,1))
+game.plotProbsBlock((1,1), True)
 
