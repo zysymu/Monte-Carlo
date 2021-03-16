@@ -36,23 +36,7 @@ class PebbleGame ():
         sns.heatmap(self.board, annot=labels, fmt="", linewidths=.5, cmap="PiYG")
         plt.title(f'Markov-chain Discrete Pebble Game Distribution over {int(self.total_iterations)} iterations')
         plt.show()
-    """
-    def plotProbs(self):
-        plt.figure(figsize=(7,7), dpi=200)
 
-        # iterate over positions
-        for i in range(len(self.board)):
-            for j in range(len(self.board)):
-                position = []
-
-                for num, board in enumerate(self.board_per_iteration):
-                    position.append(board[i,j]/np.sum(board))
-
-                plt.plot(range(self.total_iterations), position, marker='', label=f'{i},{j}')
-                
-        plt.legend()
-        plt.show()
-    """
     def plotProbs(self, p, zoom):
         fig, ax = plt.subplots(figsize=(7,7), dpi=200)
 

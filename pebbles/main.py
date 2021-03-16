@@ -10,5 +10,5 @@ game = PebbleGame(3, (0,2))
 
 game.simulate(3476)
 #game.plotBoard()
-game.plotProbsBlock((1,1), True)
+game.plotProbs((1,1), True)
 
