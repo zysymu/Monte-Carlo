@@ -85,7 +85,7 @@ class PebbleGame ():
         plt.show()
 
     @staticmethod
-    @jit(nopython=True) # use numba
+    @jit(nopython=True) # noo u cant just call nopython in python // haha numba go brrr
     def _simulate(board, total_iterations, i, j):
         #probs_over_time = []
         board_per_iteration = np.empty((total_iterations, len(board), len(board)))
